@@ -1,31 +1,79 @@
-# ShieldPay – Triggers Module
+# AI-Based Fraud Detection System
 
 ## Overview
-This module simulates real world disruptions (for example: rain, low demand, no orders) and generates actual income for gig workers. It is part of the ShieldPay AI powered parametric insurance platform.
 
-## Role in System
-This module acts as the **Trigger Engine** in the overall workflow:
+This module detects potentially fraudulent claims in a parametric insurance system for gig delivery workers.
 
-ML → predicted_income  
-Triggers → actual_income  
-Integration → claim + payout  
-UI → display  
+It assigns a **fraud score** based on multiple signals and provides **clear reasons** for flagging suspicious claims.
+
+---
 
 ## Features
-- Simulates real-world conditions:
-  - Heavy Rain
-  - Low Demand
-  - No Orders
-- Generates `actual_income` based on `predicted_income`
-- Provides structured API response for integration
 
-## API Endpoint
+* Fraud score (0–100)
+* Multi-factor analysis: 
 
-### POST /simulate
+  * GPS mismatch
+  * Weather inconsistency
+  * Time anomalies
+* Transparent fraud reasons
+* Easy integration with claim processing
 
-#### Request Body
-```json
+---
+
+## How It Works
+
+Each claim is evaluated using predefined rules:
+
+| Factor        | Description                                      |
+| ------------- | ------------------------------------------------ |
+| GPS Check     | Verifies if user location matches event location |
+| Weather Check | Confirms if reported weather event is valid      |
+| Time Check    | Detects unusual claim timing                     |
+
+Each factor contributes to the final fraud score.
+
+---
+
+## Fraud Score Interpretation
+
+* **0–30** → Low Risk
+* **31–70** → Medium Risk
+* **71–100** → High Risk
+
+---
+
+## Example
+
+```js
+const claim = {
+  userLocation: "Hyderabad",
+  eventLocation: "Bangalore",
+  eventTime: 2,
+  weather: "rain"
+};
+
+const result = detectFraud(claim);
+
+console.log(result);
+```
+
+### Output
+
+```
 {
-  "predicted_income": 1000,
-  "condition": "heavy_rain"
+  score: 75,
+  reasons: [
+    "GPS mismatch",
+    "Unusual claim time"
+  ]
 }
+```
+
+---
+
+## Future Improvements
+
+* AI/ML model integration
+* Historical behavior analysis
+* Real-time API validation
